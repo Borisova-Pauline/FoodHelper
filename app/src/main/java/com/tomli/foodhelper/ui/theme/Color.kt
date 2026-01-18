@@ -11,3 +11,5 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val InterfaceGreen = Color(0xff6ac500)
+val ChosenGreen = Color(0xfff5ffea)
+val OnChosenGreen = Color(0xff203d00)
