@@ -29,7 +29,7 @@ import com.tomli.foodhelper.ui.theme.InterfaceGreen
 fun MainScreen(navController: NavController){
     val section= remember { mutableStateOf(NavBarButtons.AdditionalSections) }
 
-    val profile = remember { mutableStateOf(User(0, "01.01.2001", "160", "70", "Мужской", "Умеренный")) }
+    val profile = remember { mutableStateOf(User(0, "26.10.2006", "166", "52", "Женский", "Низкий")) }
     val foodDb = remember { mutableListOf<FoodInfo>(FoodInfo(0, "Тёмная энергия", "Идеально подходит для завтрака", 100F, 400F, 200F, 100F, 300F)) }
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier= Modifier.padding(top=innerPadding.calculateTopPadding()).fillMaxSize()){
@@ -39,7 +39,7 @@ fun MainScreen(navController: NavController){
 
                     }
                     NavBarButtons.FoodDiary->{
-
+                        FoodDiary(profile.value)
                     }
                     NavBarButtons.FoodDB->{
                         FoodDbPage(foodDb)
