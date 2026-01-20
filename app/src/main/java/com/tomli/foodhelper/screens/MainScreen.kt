@@ -1,5 +1,7 @@
 package com.tomli.foodhelper.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,25 +14,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.tomli.foodhelper.R
 import com.tomli.foodhelper.components.NavBarButtons
 import com.tomli.foodhelper.components.NavigationBarButton
 import com.tomli.foodhelper.database.FoodInfo
+import com.tomli.foodhelper.database.FoodVM
 import com.tomli.foodhelper.database.User
 import com.tomli.foodhelper.ui.theme.InterfaceGreen
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(navController: NavController, foodVM: FoodVM = viewModel(factory = FoodVM.factory)){
     val section= remember { mutableStateOf(NavBarButtons.AdditionalSections) }
 
-    val profile = remember { mutableStateOf(User(0, "26.10.2006", "166", "52", "Женский", "Низкий")) }
-    val foodDb = remember { mutableListOf<FoodInfo>(FoodInfo(0, "Тёмная энергия", "Идеально подходит для завтрака", 100F, 400F, 200F, 100F, 300F)) }
+    val profile =remember { mutableStateOf(User(0, "01.01.2000", "160", "70", "Мужской", "Умеренный")) }
+    foodVM.getUser { user-> profile.value=user }
+    val foodDb = foodVM.allFoodDB.collectAsState(initial = emptyList())//remember { mutableListOf<FoodInfo>(FoodInfo(0, "Тёмная энергия", "Идеально подходит для завтрака", 100F, 400F, 200F, 100F, 300F)) }
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier= Modifier.padding(top=innerPadding.calculateTopPadding()).fillMaxSize()){
             Box(modifier= Modifier.fillMaxWidth().weight(1f)){
@@ -42,10 +49,10 @@ fun MainScreen(navController: NavController){
                         FoodDiary(profile.value)
                     }
                     NavBarButtons.FoodDB->{
-                        FoodDbPage(foodDb)
+                        FoodDbPage(foodDb.value)
                     }
                     NavBarButtons.Profile->{
-                        ProfilePage(profile.value)
+                        ProfilePage(profile.value, foodVM, {user-> profile.value=user})
                     }
                 }
             }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,13 +28,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.tomli.foodhelper.R
 import com.tomli.foodhelper.database.FoodInfo
 import com.tomli.foodhelper.ui.theme.ChosenGreen
 import com.tomli.foodhelper.ui.theme.OnChosenGreen
 
 @Composable
-fun FoodDbPage(foodDb: MutableList<FoodInfo>){
+fun FoodDbPage(foodDb: List<FoodInfo>){
     val lookFood = remember { mutableStateOf(FoodInfo(-1, "", "", 100F, 400F, 200F, 100F, 300F)) }
     val isMoreActive = remember { mutableStateOf(false) }
     Column(modifier = Modifier.padding(horizontal = 15.dp)) {
@@ -72,6 +72,7 @@ fun WindowFoodDbMore(item: FoodInfo, onDismiss:()->Unit){
                 if(item.description!=null && item.description!=""){
                     Text(text=item.description)
                 }
+                Spacer(modifier=Modifier.height(20.dp))
                 Text(text="${item.calories} ККал")
                 Text(text="${item.proteins} белков")
                 Text(text="${item.fats} жиров")

@@ -1,7 +1,11 @@
 package com.tomli.foodhelper.database
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class FoodInfo(
-    val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val name: String?,
     val description: String?,
     val grams: Float?,
