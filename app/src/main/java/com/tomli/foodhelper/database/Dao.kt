@@ -1,6 +1,7 @@
 package com.tomli.foodhelper.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -19,4 +20,23 @@ interface Dao {
 
     @Query("select * from user order by id desc limit 1")
     suspend fun getOneUser(): User
+
+    @Query("insert into FoodInfo (name, description, grams, calories, proteins, fats, carbohydrates) " +
+            "values (:name, :description, :grams, :calories, :proteins, :fats, :carbohydrates)")
+    suspend fun addFoodToDB(name: String, description: String?, grams: Float, calories: Float, proteins: Float, fats: Float, carbohydrates: Float)
+
+    @Update
+    suspend fun updateFoodDB(food: FoodInfo)
+
+    @Delete
+    suspend fun deleteFoodInDB(food: FoodInfo)
+
+    @Query("select * from FoodDiaryDB order by id desc limit 1")
+    suspend fun getLastFoodDiaryDay(): FoodDiaryDB?
+
+    @Update
+    suspend fun updateFoodDiaryToday(foodDiaryDB: FoodDiaryDB)
+
+    @Insert
+    suspend fun insertFoodDiaryNew(foodDiaryDB: FoodDiaryDB)
 }

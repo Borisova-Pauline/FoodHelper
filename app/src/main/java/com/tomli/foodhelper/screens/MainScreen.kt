@@ -25,10 +25,14 @@ import androidx.navigation.NavController
 import com.tomli.foodhelper.R
 import com.tomli.foodhelper.components.NavBarButtons
 import com.tomli.foodhelper.components.NavigationBarButton
+import com.tomli.foodhelper.database.FoodDiaryDB
+import com.tomli.foodhelper.database.FoodDiaryList
 import com.tomli.foodhelper.database.FoodInfo
 import com.tomli.foodhelper.database.FoodVM
 import com.tomli.foodhelper.database.User
 import com.tomli.foodhelper.ui.theme.InterfaceGreen
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
@@ -43,13 +47,13 @@ fun MainScreen(navController: NavController, foodVM: FoodVM = viewModel(factory 
             Box(modifier= Modifier.fillMaxWidth().weight(1f)){
                 when(section.value){
                     NavBarButtons.AdditionalSections->{
-
+                        AdditionalScreen()
                     }
                     NavBarButtons.FoodDiary->{
-                        FoodDiary(profile.value)
+                        FoodDiary(profile.value, foodVM, foodDb)
                     }
                     NavBarButtons.FoodDB->{
-                        FoodDbPage(foodDb.value)
+                        FoodDbPage(foodDb.value, foodVM)
                     }
                     NavBarButtons.Profile->{
                         ProfilePage(profile.value, foodVM, {user-> profile.value=user})

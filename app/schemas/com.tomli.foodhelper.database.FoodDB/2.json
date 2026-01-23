@@ -1,0 +1,174 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "260326398e7247ab34d4694beea7d6d8",
+    "entities": [
+      {
+        "tableName": "user",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `birthday` TEXT, `height` TEXT, `weight` TEXT, `gender` TEXT, `activityLv` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "birthday",
+            "columnName": "birthday",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "activityLv",
+            "columnName": "activityLv",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "FoodInfo",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `grams` REAL, `calories` REAL, `proteins` REAL, `fats` REAL, `carbohydrates` REAL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "grams",
+            "columnName": "grams",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "calories",
+            "columnName": "calories",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "proteins",
+            "columnName": "proteins",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "fats",
+            "columnName": "fats",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "carbohydrates",
+            "columnName": "carbohydrates",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "FoodDiaryDB",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` TEXT, `needCalories` REAL, `haveCalories` REAL, `needProteins` REAL, `haveProteins` REAL, `needFats` REAL, `haveFats` REAL, `needCarbohydrates` REAL, `haveCarbohydrates` REAL, `jsonInfo` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "needCalories",
+            "columnName": "needCalories",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "haveCalories",
+            "columnName": "haveCalories",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "needProteins",
+            "columnName": "needProteins",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "haveProteins",
+            "columnName": "haveProteins",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "needFats",
+            "columnName": "needFats",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "haveFats",
+            "columnName": "haveFats",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "needCarbohydrates",
+            "columnName": "needCarbohydrates",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "haveCarbohydrates",
+            "columnName": "haveCarbohydrates",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "jsonInfo",
+            "columnName": "jsonInfo",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '260326398e7247ab34d4694beea7d6d8')"
+    ]
+  }
+}

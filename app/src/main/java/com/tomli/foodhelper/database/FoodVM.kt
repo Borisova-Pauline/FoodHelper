@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.tomli.foodhelper.Applic
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class FoodVM(val database: FoodDB) : ViewModel() {
     val allFoodDB = database.dao.allFoodDB()
@@ -23,6 +25,39 @@ class FoodVM(val database: FoodDB) : ViewModel() {
     fun updateUser(user: User)=viewModelScope.launch {
         database.dao.updateUser(user)
     }
+
+    fun addFoodToDB(food: FoodInfo)=viewModelScope.launch {
+        database.dao.addFoodToDB(food.name!!, food.description, food.grams!!, food.calories!!,
+            food.proteins!!, food.fats!!, food.carbohydrates!!)
+    }
+
+    fun updateFoodInDB(food: FoodInfo)=viewModelScope.launch {
+        database.dao.updateFoodDB(food)
+    }
+
+    fun deleteFoodInDB(food: FoodInfo)=viewModelScope.launch {
+        database.dao.deleteFoodInDB(food)
+    }
+
+    fun getLastFoodDiaryDay(date: String, onReturn:(foodDiaryOne: FoodDiaryDB)->Unit, jsonReturn:(list: FoodDiaryList)->Unit)=viewModelScope.launch {
+        val foodDiaryOne = database.dao.getLastFoodDiaryDay()
+        if(foodDiaryOne==null || foodDiaryOne.date!=date){
+            val def = FoodDiaryDB(null, date, 0F, 0F, 0F, 0F, 0F, 0F,
+                0F, 0F, Json.encodeToString(FoodDiaryList(mutableListOf())))
+            onReturn(def)
+            jsonReturn(FoodDiaryList(mutableListOf()))
+            database.dao.insertFoodDiaryNew(def)
+        }else{
+            onReturn(foodDiaryOne)
+            jsonReturn(Json.decodeFromString<FoodDiaryList>(foodDiaryOne.jsonInfo!!))
+        }
+    }
+
+    fun updateFoodDiaryToday(foodDiaryOne: FoodDiaryDB, newFoodList: FoodDiaryList)=viewModelScope.launch{
+        val listJson = Json.encodeToString(newFoodList)
+        database.dao.updateFoodDiaryToday(foodDiaryOne.copy(jsonInfo = listJson))
+    }
+
     companion object{
         val factory: ViewModelProvider.Factory= object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")

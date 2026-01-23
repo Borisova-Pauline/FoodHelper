@@ -7,8 +7,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [User::class, FoodInfo::class], version = 1,
-    exportSchema = true, autoMigrations = [])
+@Database(entities = [User::class, FoodInfo::class, FoodDiaryDB::class], version = 2,
+    exportSchema = true, autoMigrations = [AutoMigration(1, 2)])
 abstract class FoodDB : RoomDatabase() {
     abstract val dao: com.tomli.foodhelper.database.Dao
     companion object{

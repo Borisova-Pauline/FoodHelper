@@ -2,7 +2,9 @@ package com.tomli.foodhelper.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity
 data class FoodInfo(
     @PrimaryKey(autoGenerate = true) val id: Int?,
