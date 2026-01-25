@@ -47,7 +47,7 @@ fun MainScreen(navController: NavController, foodVM: FoodVM = viewModel(factory 
             Box(modifier= Modifier.fillMaxWidth().weight(1f)){
                 when(section.value){
                     NavBarButtons.AdditionalSections->{
-                        AdditionalScreen()
+                        AdditionalScreen(navController)
                     }
                     NavBarButtons.FoodDiary->{
                         FoodDiary(profile.value, foodVM, foodDb)

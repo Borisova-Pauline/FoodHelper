@@ -39,4 +39,7 @@ interface Dao {
 
     @Insert
     suspend fun insertFoodDiaryNew(foodDiaryDB: FoodDiaryDB)
+
+    @Query("select * from FoodDiaryDB")
+    fun getAllFoodDiary(): Flow<List<FoodDiaryDB>>
 }

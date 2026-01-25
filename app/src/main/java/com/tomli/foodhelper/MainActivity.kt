@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tomli.foodhelper.screens.HelloPage
 import com.tomli.foodhelper.screens.MainScreen
+import com.tomli.foodhelper.screens.StatisticScreen
 import com.tomli.foodhelper.ui.theme.FoodHelperTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,6 +48,9 @@ fun Navigation(isHaveUser: Boolean){
         }
         composable("main_screen") {
             MainScreen(navController)
+        }
+        composable("statistic"){
+            StatisticScreen(navController)
         }
     }
 }

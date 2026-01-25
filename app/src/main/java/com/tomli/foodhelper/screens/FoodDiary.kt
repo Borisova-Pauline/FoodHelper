@@ -123,10 +123,10 @@ fun FoodDiary(user: User, foodVM: FoodVM, foodDB: State<List<FoodInfo>>){
                                 Text(text="${diaryList.value.list[index].food.grams} гр.")
                             }
                             Row{
-                                Text(text="${diaryList.value.list[index].food.calories} К.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
-                                Text(text="${diaryList.value.list[index].food.proteins} Б.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
-                                Text(text="${diaryList.value.list[index].food.fats} Ж.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
-                                Text(text="${diaryList.value.list[index].food.carbohydrates} У.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
+                                Text(text="${"%.2f".format(diaryList.value.list[index].food.calories)} К.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
+                                Text(text="${"%.2f".format(diaryList.value.list[index].food.proteins)} Б.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
+                                Text(text="${"%.2f".format(diaryList.value.list[index].food.fats)} Ж.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
+                                Text(text="${"%.2f".format(diaryList.value.list[index].food.carbohydrates)} У.", modifier=Modifier.weight(1f), textAlign = TextAlign.Center, fontSize = 15.sp)
                             }
                         }
                         DropdownMenu(expanded = dropDownState.value, onDismissRequest = {dropDownState.value=false}) {
@@ -139,7 +139,9 @@ fun FoodDiary(user: User, foodVM: FoodVM, foodDB: State<List<FoodInfo>>){
         }
     }
     if(isAdding.value){
-        AddFoodDiaryDialog({isAdding.value=false}, {food-> diaryList.value.list.add(food); foodVM.updateFoodDiaryToday(foodDiaryOne.value!!, diaryList.value)}, foodDB)
+        AddFoodDiaryDialog({isAdding.value=false}, {food-> diaryList.value.list.add(food); lambdaCPFC_Doing()
+            foodVM.updateFoodDiaryToday(foodDiaryOne.value!!, diaryList.value)
+            foodVM.getLastFoodDiaryDay(date.value, {foodDiary-> foodDiaryOne.value=foodDiary}, {list-> diaryList.value=list})}, foodDB)
     }
     if(isDeleting.value){
         AlertDialog(onDismissRequest = {isDeleting.value=false},
@@ -147,8 +149,10 @@ fun FoodDiary(user: User, foodVM: FoodVM, foodDB: State<List<FoodInfo>>){
             confirmButton = {Text(text = "Удалить", modifier = Modifier.padding(5.dp)
                 .clickable {
                     diaryList.value.list.removeAt(deletingIndex.value)
+                    lambdaCPFC_Doing()
                     foodVM.updateFoodDiaryToday(foodDiaryOne.value!!, diaryList.value)
-                    isDeleting.value=false})},
+                    isDeleting.value=false
+                    foodVM.getLastFoodDiaryDay(date.value, {foodDiary-> foodDiaryOne.value=foodDiary}, {list-> diaryList.value=list})})},
             dismissButton = {Text(text = "Отменить", modifier = Modifier.padding(5.dp)
                 .clickable { isDeleting.value=false})})
     }
@@ -157,7 +161,7 @@ fun FoodDiary(user: User, foodVM: FoodVM, foodDB: State<List<FoodInfo>>){
 @Composable
 fun ProgressCPFCone(modifier: Modifier, current: Float, max: Float, name: String){
     Column(modifier=modifier, horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text="${current}/${(max*100).roundToInt()/100F}", fontSize = 12.sp)
+        Text(text="${"%.2f".format(current)}/${"%.2f".format(max)}", fontSize = 12.sp)
         VerticalProgress(current, max, 30.dp, 150F)
         Text(text=name)
     }

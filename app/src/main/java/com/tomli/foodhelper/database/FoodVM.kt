@@ -12,6 +12,7 @@ import kotlinx.serialization.json.Json
 
 class FoodVM(val database: FoodDB) : ViewModel() {
     val allFoodDB = database.dao.allFoodDB()
+    val allFoodDiary = database.dao.getAllFoodDiary()
 
     fun setUser(birthday: String, height: String, weight: String, gender: String, activityLv: String)=viewModelScope.launch{
         database.dao.setUser(birthday, height, weight, gender, activityLv)
