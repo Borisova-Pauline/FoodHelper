@@ -32,6 +32,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -182,7 +183,7 @@ fun AddFoodDiaryDialog(onDismiss:()->Unit, onOk:(foodOne: FoodDiaryOne)->Unit, f
     val chosenFood = remember { mutableStateOf<FoodInfo?>(null) }
     val isChooseFood = remember { mutableStateOf(false) }
     val time = LocalTime.now()
-    val timeString = "${time.hour}:${time.minute}"
+    val timeString = formatTime(time)
     val grams = remember { mutableStateOf("100") }
     val context = LocalContext.current
     Dialog(onDismiss) {
@@ -253,6 +254,14 @@ fun AddFoodDiaryDialog(onDismiss:()->Unit, onOk:(foodOne: FoodDiaryOne)->Unit, f
     }
 }
 
+fun formatTime(time: LocalTime): String{
+    return if(time.minute<10){
+        "${time.hour}:0${time.minute}"
+    }else{
+        "${time.hour}:${time.minute}"
+    }
+}
+
 fun getCPFCforGrams(time: String,grams: Float, food: FoodInfo): FoodDiaryOne{
     val ratio = grams/food.grams!!
     return FoodDiaryOne(time, FoodInfo(null, food.name, null, grams, ratio*food.calories!!,
@@ -295,14 +304,6 @@ fun calculateAge(date: String): Int{
     }
     return ChronoUnit.YEARS.between(dateC, LocalDate.now()).toInt()
 }
-
-
-/*fun isItThisDay(date: String?): Boolean{
-    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-    val localDate = LocalDate.now()
-    val thisDay = localDate.format(dateFormatter)
-    return date==thisDay
-}*/
 
 fun formatNowDateToString(): String{
     val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")

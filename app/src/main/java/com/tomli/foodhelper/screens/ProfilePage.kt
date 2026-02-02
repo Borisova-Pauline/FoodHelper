@@ -149,6 +149,8 @@ fun InfoField(text: String, isChanging: Boolean, onChanging:(value: Boolean)->Un
                             if(tempVal.value!="" && tempVal.value.toFloat()>0F){
                                 onValueChange(tempVal.value)
                                 onChanging(false)
+                            }else{
+                                Toast.makeText(context, "Убедитесь что значение введено правильно", Toast.LENGTH_LONG).show()
                             }
                         }catch (e: Exception){
                             Toast.makeText(context, "Убедитесь, что значение введено правильно", Toast.LENGTH_LONG).show()

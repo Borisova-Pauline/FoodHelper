@@ -43,7 +43,7 @@ fun StatisticScreen(navController: NavController, foodVM: FoodVM= viewModel(fact
     val fatsState = rememberLazyListState()
     val carbohydratesState = rememberLazyListState()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(foodDiary.value) {
         if (foodDiary.value.isNotEmpty()) {
             caloriesState.scrollToItem(foodDiary.value.size - 1)
             proteinsState.scrollToItem(foodDiary.value.size - 1)
@@ -65,7 +65,9 @@ fun StatisticScreen(navController: NavController, foodVM: FoodVM= viewModel(fact
                 Box(modifier=Modifier.fillMaxWidth().border(1.dp, color= InterfaceGreen)){
                     LazyRow(state = caloriesState) {
                         items(foodDiary.value){ item->
-                            ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveCalories!!, item.needCalories!!, item.date!!)
+                            if(item.needCalories!!>0F && item.needProteins!!>0F && item.needFats!!>0F && item.needCarbohydrates!!>0F){
+                                ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveCalories!!, item.needCalories!!, item.date!!)
+                            }
                         }
                     }
                 }
@@ -74,7 +76,14 @@ fun StatisticScreen(navController: NavController, foodVM: FoodVM= viewModel(fact
                 Box(modifier=Modifier.fillMaxWidth().border(1.dp, color= InterfaceGreen)){
                     LazyRow(state = proteinsState) {
                         items(foodDiary.value){ item->
-                            ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveProteins!!, item.needProteins!!, item.date!!)
+                            if(item.needCalories!!>0F && item.needProteins!!>0F && item.needFats!!>0F && item.needCarbohydrates!!>0F) {
+                                ProgressCPFCone(
+                                    modifier = Modifier.width(100.dp),
+                                    item.haveProteins!!,
+                                    item.needProteins!!,
+                                    item.date!!
+                                )
+                            }
                         }
                     }
                 }
@@ -83,7 +92,9 @@ fun StatisticScreen(navController: NavController, foodVM: FoodVM= viewModel(fact
                 Box(modifier=Modifier.fillMaxWidth().border(1.dp, color= InterfaceGreen)){
                     LazyRow(state = fatsState) {
                         items(foodDiary.value){ item->
-                            ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveFats!!, item.needFats!!, item.date!!)
+                            if(item.needCalories!!>0F && item.needProteins!!>0F && item.needFats!!>0F && item.needCarbohydrates!!>0F){
+                                ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveFats!!, item.needFats!!, item.date!!)
+                            }
                         }
                     }
                 }
@@ -92,7 +103,9 @@ fun StatisticScreen(navController: NavController, foodVM: FoodVM= viewModel(fact
                 Box(modifier=Modifier.fillMaxWidth().border(1.dp, color= InterfaceGreen)){
                     LazyRow(state = carbohydratesState) {
                         items(foodDiary.value){ item->
-                            ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveCarbohydrates!!, item.needCarbohydrates!!, item.date!!)
+                            if(item.needCalories!!>0F && item.needProteins!!>0F && item.needFats!!>0F && item.needCarbohydrates!!>0F){
+                                ProgressCPFCone(modifier=Modifier.width(100.dp), item.haveCarbohydrates!!, item.needCarbohydrates!!, item.date!!)
+                            }
                         }
                     }
                 }

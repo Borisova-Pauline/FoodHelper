@@ -41,7 +41,7 @@ fun MainScreen(navController: NavController, foodVM: FoodVM = viewModel(factory 
 
     val profile =remember { mutableStateOf(User(0, "01.01.2000", "160", "70", "Мужской", "Умеренный")) }
     foodVM.getUser { user-> profile.value=user }
-    val foodDb = foodVM.allFoodDB.collectAsState(initial = emptyList())//remember { mutableListOf<FoodInfo>(FoodInfo(0, "Тёмная энергия", "Идеально подходит для завтрака", 100F, 400F, 200F, 100F, 300F)) }
+    val foodDb = foodVM.allFoodDB.collectAsState(initial = emptyList())
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier= Modifier.padding(top=innerPadding.calculateTopPadding()).fillMaxSize()){
             Box(modifier= Modifier.fillMaxWidth().weight(1f)){
